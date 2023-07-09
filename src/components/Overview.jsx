@@ -1,16 +1,11 @@
-
 import React from "react";
 
-const Overview = (props) => {
-  const { tasks } = props;
-
+ export default function Overview ({ arr }) {
   return (
-    <ul>
-      {tasks.map((task) => {
-        return <li key={task.id}>{task.text}</li>;
-      })}
-    </ul>
-  );
-};
-
-export default Overview;
+    <>
+      {arr.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+    </>
+  )
+}

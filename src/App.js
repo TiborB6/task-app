@@ -1,57 +1,26 @@
-import React, { Component } from "react";
-import uniqid from "uniqid";
-import Overview from "./components/Overview";
+import React, {useState} from 'react';
+import Overview from './components/Overview';
 
-class App extends Component {
-  constructor() {
-    super();
+export default function App () {
+  const [myList, setMyList] = useState([]);
 
-    this.state = {
-      task: {
-        text: '',
-        id: uniqid()
-      },
-      tasks: [],
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newItem = event.target.elements.inputName.value;
+    setMyList([...myList, newItem])
+    event.target.reset()
   }
 
-  handleChange = (e) => {
-    this.setState({
-      task: {
-        text: e.target.value,
-        id: this.state.task.id,
-      },
-    });
-  };
-
-  onSubmitTask = (e) => {
-    e.preventDefault();
-    this.setState({
-      tasks: this.state.tasks.concat(this.state.task),
-      task: {
-        text: '', 
-        id: uniqid()
-      },
-    });
-  };
-
-  render() {
-    const { task, tasks } = this.state;
-
-    return (
+  return (
+    <>
       <div>
-        <form onSubmit={this.onSubmitTask}>
-          <label htmlFor="taskInput">Enter task</label>
-          <input type="text" id="taskInput" onChange={this.handleChange} value={task.text}/>
-          <button type="submit">
-            Add Task
-          </button>
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="inputName"/>
+          <button type="submit">Submit</button>
         </form>
-        <Overview tasks={tasks} />
       </div>
-    );
-  }
+      <Overview arr={myList}/>
+    </>
+  );
 }
-
-export default App;
 
